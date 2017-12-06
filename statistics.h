@@ -11,7 +11,7 @@ public:
   inline int Loses() { return _loses; }
   void SetWins(int wins);
   void SetLoses(int loses);
-  float WinPercentage();
+  double WinPercentage();
 private:
   int _wins, _loses;
 };

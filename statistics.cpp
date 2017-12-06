@@ -17,7 +17,7 @@ void Statistics::SetLoses(int loses){
   _loses = (loses>=0) ? loses : 0;
 }
 
-float Statistics::WinPercentage(){
+double Statistics::WinPercentage(){
   if (_loses == 0)
     return 1.0;
  return (_wins+.0)/(_wins + _loses);

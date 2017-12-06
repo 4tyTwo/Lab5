@@ -1,6 +1,8 @@
 #include "statistics.h"
 #include "QString"
 #include <iostream>
+#include <stdlib.h>
+#include <QCoreApplication>
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
@@ -15,11 +17,17 @@ public:
   Dictionary();
   void insert(const Dict_elem* item);
   void print();
-  //void insert(QString key_new, Statictics stats_new);
-  //void insert(QString key_new, int wins, int loses);
+  void join(Dictionary joined);
+  void insert(QString key_new, Statistics stats_new);
+  void insert(QString key_new, int wins, int loses);
   Statistics& getStats(QString key_searched);
-  //Statistics& operator[](QString key_searched);
-  //void del(QString key_searched);
+  std::vector<QString> keys();
+  std::vector<Dict_elem> elements();
+  Statistics& operator[](QString key_searched) {return getStats(key_searched);}
+  void del(QString key_searched);
+  inline int size() { return count; }
+  inline void clear() { data = NULL; count = 0; }
+  ~Dictionary();
 private:
   void grow(int grow_by = 3);
   int binary_search_insert(int l_border,int r_border,QString key_searched);

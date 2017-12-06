@@ -1,33 +1,33 @@
-#include <QCoreApplication>
 #include "dictionary.h"
+#include <QString>
+
+QString GetRandomString()
+{
+   QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+   int randomStringLength = 7; // assuming you want random strings of 12 characters
+
+   QString randomString;
+   for(int i=0; i<randomStringLength; ++i)
+   {
+       int index = qrand() % possibleCharacters.length();
+       QChar nextChar = possibleCharacters.at(index);
+       randomString.append(nextChar);
+   }
+   return randomString;
+}
+
+void fill_random(Dictionary* filled, int len){
+  for (int i=0;i<len;i++)
+    filled->insert(GetRandomString(),qrand()%50,qrand()%50);
+}
+
 int main(int argc, char *argv[])
 {
   QCoreApplication a(argc, argv);
   Statistics bolid(5,3);
   Dictionary Dic_Arr;
   Dict_elem bol;
-  bol.key="c";
-  bol.stats = bolid;
-  Dic_Arr.insert(&bol);
-  bol.key="a";
+  fill_random(&Dic_Arr,8);
   Dic_Arr.print();
-  std::cout<<std::endl;
-  Dic_Arr.insert(&bol);
-  bol.key="z";
-  Dic_Arr.print();
-  std::cout<<std::endl;
-  Dic_Arr.insert(&bol);
-  Dic_Arr.print();
-  std::cout<<std::endl;
-  bol.key="f";
-  Dic_Arr.insert(&bol);
-  Dic_Arr.print();
-  std::cout<<std::endl;
-  bol.key="d";
-  bol.stats.SetLoses(2);
-  Dic_Arr.insert(&bol);
-  Dic_Arr.print();
-  std::cout<<std::endl;
-  std::cout<<Dic_Arr.getStats("d").WinPercentage()<<std::endl;
   return a.exec();
 }

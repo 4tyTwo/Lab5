@@ -49,15 +49,57 @@ void Dictionary::insert(const Dict_elem* item){
   ++count;
 }
 
+void Dictionary::insert(QString key_new, Statistics stats_new){
+  Dict_elem* item = new Dict_elem;
+  item->key = key_new;
+  item->stats = stats_new;
+  insert(item);
+  delete item;
+}
+
+void Dictionary::insert(QString key_new, int wins, int loses){
+  Dict_elem* item = new Dict_elem;
+  item->key = key_new;
+  item->stats.SetLoses(loses);
+  item->stats.SetWins(wins);
+  insert(item);
+  delete item;
+}
+
 Statistics& Dictionary::getStats(QString key_searched){
   int pos = binary_search(0,count,key_searched);
   pos = (pos == -1)? 0 : pos;
   return data[pos].stats;
 }
 
+void Dictionary::del(QString key_searched){
+  int pos = binary_search(0,count,key_searched);
+  if (pos != -1){
+    for (int i=pos;i<count-1;i++)
+        data[i] = data[i+1];
+      --count;
+  }
+}
+
 void Dictionary::print(){
   for (int i=0;i<count;i++)
-    std::cout<<data[i].key.toStdString()<<std::endl;
+    std::cout<<"Horse "<<data[i].key.toStdString()<<": "<<
+    data[i].stats.Wins()<<" wins "<<data[i].stats.Loses()<<" loses "<<
+    data[i].stats.WinPercentage()*100<< "% winrate"<<std::endl;
+}
+
+std::vector<QString> Dictionary::keys(){
+  std::vector<QString> _keys(count);
+  for (int i=0;i<count;i++)
+    _keys.push_back(data[i].key);
+  return _keys;
+}
+
+void Dictionary::join(Dictionary joined){
+  std::vector<QString> joined_keys(joined.size());
+  for (int i=0;i<joined.size();i++)
+    if (binary_search(0,count,joined_keys[i])==-1)
+      insert(joined_keys[i],joined[joined_keys[i]]);
 }
 
 int Dictionary::binary_search(int l_border, int r_border, QString key_searched){
@@ -80,4 +122,15 @@ int Dictionary::binary_search(int l_border, int r_border, QString key_searched){
   }
   else
     return -1;
+}
+
+std::vector<Dict_elem> Dictionary::elements(){
+  std::vector<Dict_elem> items(count);
+  for (int i=0;i<count; i++)
+    items.push_back(data[i]);
+  return items;
+}
+
+Dictionary::~Dictionary(){
+
 }
