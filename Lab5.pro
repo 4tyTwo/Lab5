@@ -15,4 +15,5 @@ SOURCES += main.cpp \
 
 HEADERS += \
     dictionary.h \
-    statistics.h
+    statistics.h \
+    tdict.h

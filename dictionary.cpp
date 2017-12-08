@@ -43,8 +43,6 @@ void Dictionary::insert(const Dict_elem* item){
   if (count != 0)
     pos = binary_search_insert(0,count,item->key);
   transfer(pos);
-  if (count >= allocated)
-    grow();
   data[pos] = *item;
   ++count;
 }
@@ -97,9 +95,12 @@ std::vector<QString> Dictionary::keys(){
 
 void Dictionary::join(Dictionary joined){
   std::vector<QString> joined_keys(joined.size());
-  for (int i=0;i<joined.size();i++)
-    if (binary_search(0,count,joined_keys[i])==-1)
+  int index = 0;
+  for (int i=0;i<joined.size();i++){
+    index = binary_search(0,count,joined_keys[i]);
+    if (index == -1)
       insert(joined_keys[i],joined[joined_keys[i]]);
+  }
 }
 
 int Dictionary::binary_search(int l_border, int r_border, QString key_searched){

@@ -17,6 +17,12 @@ void Statistics::SetLoses(int loses){
   _loses = (loses>=0) ? loses : 0;
 }
 
+Statistics& Statistics::operator +=(Statistics added){
+  _wins += added.Wins();
+  _loses += added.Loses();
+  return *this;
+}
+
 double Statistics::WinPercentage(){
   if (_loses == 0)
     return 1.0;

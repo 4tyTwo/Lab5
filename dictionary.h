@@ -15,16 +15,16 @@ struct Dict_elem
 class Dictionary{
 public:
   Dictionary();
-  void insert(const Dict_elem* item);
-  void print();
-  void join(Dictionary joined);
+  void insert(const Dict_elem* item);//Добавить элемент
+  void print(); //Выводит пары ключ-значения
+  void join(Dictionary joined);//Объеденить 2 словаря
   void insert(QString key_new, Statistics stats_new);
   void insert(QString key_new, int wins, int loses);
-  Statistics& getStats(QString key_searched);
-  std::vector<QString> keys();
-  std::vector<Dict_elem> elements();
+  Statistics& getStats(QString key_searched);//Получить элемент
+  std::vector<QString> keys();//Получить вектор из ключей
+  std::vector<Dict_elem> elements();//Получить вектор из элементов
   Statistics& operator[](QString key_searched) {return getStats(key_searched);}
-  void del(QString key_searched);
+  void del(QString key_searched);//Удаление элемента
   inline int size() { return count; }
   inline void clear() { data = NULL; count = 0; }
   ~Dictionary();

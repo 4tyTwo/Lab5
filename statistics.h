@@ -11,7 +11,8 @@ public:
   inline int Loses() { return _loses; }
   void SetWins(int wins);
   void SetLoses(int loses);
-  double WinPercentage();
+  Statistics& operator+=(Statistics added);
+  double WinPercentage();//Полочить процент побед лошади
 private:
   int _wins, _loses;
 };

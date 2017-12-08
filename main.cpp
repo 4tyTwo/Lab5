@@ -1,6 +1,7 @@
-#include "dictionary.h"
+#include <tdict.h>
 #include <QString>
-
+#include <iostream>
+#include "statistics.h"
 QString GetRandomString()
 {
    QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
@@ -16,18 +17,21 @@ QString GetRandomString()
    return randomString;
 }
 
-void fill_random(Dictionary* filled, int len){
-  for (int i=0;i<len;i++)
-    filled->insert(GetRandomString(),qrand()%50,qrand()%50);
-}
+//void fill_random(Tdict* filled, int len){
+//  for (int i=0;i<len;i++)
+//    filled->insert(GetRandomString(),qrand()%50,qrand()%50);
+//}
 
 int main(int argc, char *argv[])
 {
   QCoreApplication a(argc, argv);
-  Statistics bolid(5,3);
-  Dictionary Dic_Arr;
-  Dict_elem bol;
-  fill_random(&Dic_Arr,8);
-  Dic_Arr.print();
+  Statistics bol(5,3);
+  TDict<Statistics,std::string> dict;
+  std::string b = "g";
+  dict.insert(bol,"g");
+  dict.insert(bol,b);
+  dict.del(b);
+  if (dict.exists(b))
+    std::cout<<dict.getStats(b).Wins();
   return a.exec();
 }
